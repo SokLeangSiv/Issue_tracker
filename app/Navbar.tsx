@@ -15,7 +15,7 @@ const Navbar = () => {
   ]
 
   return (
-    <nav className="flex space-x-4">
+    <nav className="flex space-x-4 p-5 border-b-2 border-b-slate-500 mb-7">
       <Link href="/"><AiFillBug /></Link>
       <ul className='flex space-x-8'>
         {links.map((link) => {
