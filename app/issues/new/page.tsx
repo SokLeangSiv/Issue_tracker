@@ -1,7 +1,7 @@
 'use client'
-import React from 'react'
+
 import { TextField, Button, Callout,Text } from '@radix-ui/themes';
-import SimpleMDE from "react-simplemde-editor";
+
 import "easymde/dist/easymde.min.css";
 import { useForm, Controller } from 'react-hook-form';
 import axios from 'axios';
@@ -12,6 +12,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { set, z } from 'zod';
 import Spinner from '@/components/Spinner';
 import delay from 'delay';
+import dynamic from 'next/dynamic';
 
 // we use this to infer the type of the form we dont have to declare it again for example 
 // type FormProp = {
@@ -23,7 +24,7 @@ import delay from 'delay';
 type FormProp = z.infer<typeof CreateIssueSchema>; 
 
 
-
+const SimpleMDE = dynamic(() => import('react-simplemde-editor'), { ssr: false });
 
 
 const NewIssuePage = () => {
