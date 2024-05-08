@@ -1,11 +1,10 @@
 "use client "
 import { usePathname } from 'next/navigation'
 import { Table, } from '@radix-ui/themes'
-import Link from '@/components/Link'
+import { Link, ShowBageStatus } from '@/components'
 import React from 'react'
 
 import prisma from '@/prisma/client'
-import ShowBageStatus from '@/components/ShowBageStatus'
 import delay from 'delay'
 import IssueAction from './IssueAction'
 

@@ -1,7 +1,5 @@
-import ShowBageStatus from '@/components/ShowBageStatus'
-import { Box, Heading, Card, Text } from '@radix-ui/themes'
-import Skeleton from 'react-loading-skeleton'
-import 'react-loading-skeleton/dist/skeleton.css'
+import { Skeleton } from '@/components'
+import { Box, Card } from '@radix-ui/themes'
 
 const LoadingIssueDetailPage = () => {
   return (
