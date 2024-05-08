@@ -1,6 +1,6 @@
 import { ShowBageStatus } from '@/components'
 import prisma from '@/prisma/client'
-import { Box, Card, Grid, Heading, Text } from '@radix-ui/themes'
+import { Box, Button, Card, Grid, Heading, Text } from '@radix-ui/themes'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import ReactMarkDown from 'react-markdown'
@@ -47,8 +47,10 @@ const IssueDetailPage = async ({ params }: IssueDetailPageProps) => {
             </Box>
 
             <Box>
-                <Pencil2Icon/>
-                <Link href={`/issues/${issue.id}/edit`}>Edit button</Link>
+                <Button>
+                    <Pencil2Icon />
+                    <Link href={`/issues/${issue.id}/edit`}>Edit button</Link>
+                </Button>
             </Box>
 
         </Grid>
