@@ -11,6 +11,7 @@ import { CreateIssueSchema } from '@/app/validateSchema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { set, z } from 'zod';
 import Spinner from '@/components/Spinner';
+import delay from 'delay';
 
 // we use this to infer the type of the form we dont have to declare it again for example 
 // type FormProp = {
@@ -22,7 +23,12 @@ import Spinner from '@/components/Spinner';
 type FormProp = z.infer<typeof CreateIssueSchema>; 
 
 
+
+
+
 const NewIssuePage = () => {
+    
+    delay(2000)
     const router = useRouter();
     const [error, setError] = useState('')
     const { register, handleSubmit, control, formState  : {errors} } = useForm<FormProp>({

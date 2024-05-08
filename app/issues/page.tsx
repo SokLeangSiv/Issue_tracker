@@ -1,20 +1,24 @@
 "use client "
 import { usePathname } from 'next/navigation'
-import { Button, Table, } from '@radix-ui/themes'
+import { Table, } from '@radix-ui/themes'
+import Link from '@/components/Link'
 import React from 'react'
-import Link from 'next/link'
+
 import prisma from '@/prisma/client'
+import ShowBageStatus from '@/components/ShowBageStatus'
+import delay from 'delay'
+import IssueAction from './IssueAction'
 
 const IssuePage = async () => {
 
   const issuse = await prisma.issue.findMany()
 
+  await delay(2000)
+
 
   return (
     <div>
-      <div className="mb-5">      
-        <Button><Link href='/issues/new'>New Issue</Link></Button>
-      </div>
+      <IssueAction />
       <Table.Root variant='surface'>
         <Table.Header>
           <Table.Row>
@@ -30,12 +34,16 @@ const IssuePage = async () => {
             return (
               <Table.Row key={issue.id}>
                 <Table.Cell >
-                  {issue.title}
+                  <Link href={`/issues/${issue.id}`}>
+                    {issue.title}
+                  </Link>
                   <div className='block md:hidden'>
-                    {issue.status}
+                    <ShowBageStatus status={issue.status} />
                   </div>
                 </Table.Cell>
-                <Table.Cell className='hidden md:table-cell'>{issue.status}</Table.Cell>
+                <Table.Cell className='hidden md:table-cell bg-red-500'>
+                  <ShowBageStatus  status={issue.status} />
+                </Table.Cell>
                 <Table.Cell className='hidden md:table-cell'>{issue.created_at.toDateString()}</Table.Cell>
               </Table.Row>
             )
