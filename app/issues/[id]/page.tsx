@@ -41,4 +41,6 @@ const IssueDetailPage = async ({ params }: IssueDetailPageProps) => {
     )
 }
 
+
+
 export default IssueDetailPage
