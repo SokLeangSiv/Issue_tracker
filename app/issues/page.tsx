@@ -1,6 +1,6 @@
 "use client "
 import { usePathname } from 'next/navigation'
-import { Table, } from '@radix-ui/themes'
+import { Button, Table, } from '@radix-ui/themes'
 import { Link, ShowBageStatus } from '@/components'
 import React from 'react'
 
@@ -41,9 +41,16 @@ const IssuePage = async () => {
                   </div>
                 </Table.Cell>
                 <Table.Cell className='hidden md:table-cell bg-red-500'>
-                  <ShowBageStatus  status={issue.status} />
+                  <ShowBageStatus status={issue.status} />
                 </Table.Cell>
                 <Table.Cell className='hidden md:table-cell'>{issue.created_at.toDateString()}</Table.Cell>
+                <Table.Cell className='hidden md:table-cell'>
+                  <Button color='gray' variant='classic' >
+                    <Link  href={`/issues/${issue.id}/edit`}>
+                      Edit
+                    </Link>
+                  </Button>
+                </Table.Cell>
               </Table.Row>
             )
           })}

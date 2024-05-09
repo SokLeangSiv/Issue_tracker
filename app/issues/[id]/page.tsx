@@ -1,9 +1,10 @@
 import { ShowBageStatus } from '@/components'
 import prisma from '@/prisma/client'
-import { Box, Card, Grid, Heading, Text } from '@radix-ui/themes'
+import { Box, Card, Flex, Grid, Heading, Text } from '@radix-ui/themes'
 import { notFound } from 'next/navigation'
 import EditIssueButton from './EditIssueButton'
 import IssueDetail from './IssueDetail'
+import DeleteIssueButton from './DeleteIssueButton'
 
 
 type IssueDetailPageProps = {
@@ -28,13 +29,16 @@ const IssueDetailPage = async ({ params }: IssueDetailPageProps) => {
 
     return (
 
-        <Grid columns={{ initial: "1", md: "2" }} gap='5' >
-            <Box>
+        <Grid columns={{ initial: "1", sm: "5" }} gap='5' >
+            <Box className='md:col-span-4'>
                 <IssueDetail issue={issue} />
             </Box>
 
             <Box >
-                <EditIssueButton issueId={issue.id} />
+                <Flex direction={'column'} gap='3'>
+                    <EditIssueButton issueId={issue.id} />
+                    <DeleteIssueButton issueId={issue.id} />
+                </Flex>
             </Box>
 
         </Grid>
