@@ -7,12 +7,18 @@ import React from 'react'
 import prisma from '@/prisma/client'
 import delay from 'delay'
 import IssueAction from './IssueAction'
-
+import DeleteIssueButton from './[id]/DeleteIssueButton'
+import dynamic from 'next/dynamic'
 const IssuePage = async () => {
 
   const issuse = await prisma.issue.findMany()
 
   await delay(2000)
+
+ // convert deleteissueButton to dynamic
+  const DeleteIssueButton = dynamic(() => import('./[id]/DeleteIssueButton'), {
+    ssr: false
+  })
 
 
   return (
@@ -50,6 +56,10 @@ const IssuePage = async () => {
                       Edit
                     </Link>
                   </Button>
+
+                  <Button color='red'>
+                    <DeleteIssueButton issueId={issue.id} />
+                  </Button>
                 </Table.Cell>
               </Table.Row>
             )
@@ -61,6 +71,6 @@ const IssuePage = async () => {
   )
 }
 
-export const dynamic = 'force-dynamic'
+export const revalidation = '0'
 
 export default IssuePage
