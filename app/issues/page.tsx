@@ -52,7 +52,7 @@ const IssuePage = async () => {
                 <Table.Cell className='hidden md:table-cell'>{issue.created_at.toDateString()}</Table.Cell>
                 <Table.Cell className='hidden md:table-cell'>
                   <Button color='gray' variant='classic' >
-                    <Link  href={`/issues/${issue.id}/edit`}>
+                    <Link  href={`/issues//edit/${issue.id}`}>
                       Edit
                     </Link>
                   </Button>
