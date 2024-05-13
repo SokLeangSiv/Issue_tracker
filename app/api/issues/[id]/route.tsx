@@ -1,5 +1,6 @@
 import { IssueSchema } from "@/app/validateSchema";
 import prisma from "@/prisma/client";
+import delay from "delay";
 import { NextRequest , NextResponse} from "next/server"
 
 export const PATCH = async(request : NextRequest, {params}: {params:{id:string}}) =>{
@@ -46,6 +47,8 @@ export const DELETE = async(request : NextRequest, {params}: {params:{id:string}
             id: parseInt(params.id)
         }
     })
+
+    delay(2000);
 
     if(!issue){
         return NextResponse.json({error : 'issue not found'}, {status : 404})
