@@ -1,15 +1,20 @@
-"use client "
-import { usePathname } from 'next/navigation'
-import { Button, Table, } from '@radix-ui/themes'
-import { Link, ShowBageStatus } from '@/components'
-import React from 'react'
 
+import { Link, ShowBageStatus } from '@/components'
+import { Button, Table, } from '@radix-ui/themes'
 import prisma from '@/prisma/client'
 import delay from 'delay'
-import IssueAction from './IssueAction'
-import DeleteIssueButton from './[id]/DeleteIssueButton'
 import dynamic from 'next/dynamic'
+import IssueAction from './IssueAction'
+import { useSession } from 'next-auth/react'
+import authOption from '../auth/authOption'
+import { getServerSession } from 'next-auth'
+
+
 const IssuePage = async () => {
+
+  //get  session in use client
+
+  const session = await getServerSession(authOption)
 
   const issuse = await prisma.issue.findMany()
 
@@ -50,7 +55,7 @@ const IssuePage = async () => {
                   <ShowBageStatus status={issue.status} />
                 </Table.Cell>
                 <Table.Cell className='hidden md:table-cell'>{issue.created_at.toDateString()}</Table.Cell>
-                <Table.Cell className='hidden md:table-cell'>
+                {session && <Table.Cell className='hidden md:table-cell'>
                   <Button color='gray' variant='classic' >
                     <Link  href={`/issues//edit/${issue.id}`}>
                       Edit
@@ -60,7 +65,7 @@ const IssuePage = async () => {
                   <Button color='red'>
                     <DeleteIssueButton issueId={issue.id} />
                   </Button>
-                </Table.Cell>
+                </Table.Cell>}
               </Table.Row>
             )
           })}
