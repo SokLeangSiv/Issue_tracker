@@ -1,12 +1,12 @@
-import { ShowBageStatus } from '@/components'
+import authOption from '@/app/auth/authOption'
 import prisma from '@/prisma/client'
-import { Box, Card, Flex, Grid, Heading, Text } from '@radix-ui/themes'
+import { Box, Flex, Grid } from '@radix-ui/themes'
+import { getServerSession } from 'next-auth'
 import { notFound } from 'next/navigation'
+import AssignIssue from './AssignIssue'
+import DeleteIssueButton from './DeleteIssueButton'
 import EditIssueButton from './EditIssueButton'
 import IssueDetail from './IssueDetail'
-import DeleteIssueButton from './DeleteIssueButton'
-import { getServerSession } from 'next-auth'
-import authOption from '@/app/auth/authOption'
 
 
 type IssueDetailPageProps = {
@@ -40,6 +40,7 @@ const IssueDetailPage = async ({ params }: IssueDetailPageProps) => {
 
             {session && <Box >
                 <Flex direction={'column'} gap='3'>
+                    <AssignIssue/>
                     <EditIssueButton issueId={issue.id} />
                     <DeleteIssueButton issueId={issue.id} />
                 </Flex>
