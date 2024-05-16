@@ -20,6 +20,8 @@ model Issue {
   status      Status   @default(OPEN)
   created_at  DateTime @default(now())
   updated_at  DateTime @updatedAt
+  assignToUserId String? 
+  assignToUser User? @relation(fields: [assignToUserId], references: [id])
 }
 
 enum Status {
@@ -67,6 +69,7 @@ model User {
   image         String?
   accounts      Account[]
   sessions      Session[]
+  assignIssues  Issue[]
  
   @@map("users")
 }
