@@ -72,7 +72,7 @@ const Navlink = () => {
 
   const links = [
     { label: 'Dashboard', href: '/' },
-    { label: 'Issues', href: '/issues' }
+    { label: 'Issues', href: '/issues/list' }
   ]
 
   return (

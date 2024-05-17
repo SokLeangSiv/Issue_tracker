@@ -6,7 +6,7 @@ import delay from 'delay'
 import dynamic from 'next/dynamic'
 import IssueAction from './IssueAction'
 import { useSession } from 'next-auth/react'
-import authOption from '../auth/authOption'
+import authOption from '../../auth/authOption'
 import { getServerSession } from 'next-auth'
 
 
@@ -21,7 +21,7 @@ const IssuePage = async () => {
   await delay(2000)
 
  // convert deleteissueButton to dynamic
-  const DeleteIssueButton = dynamic(() => import('./[id]/DeleteIssueButton'), {
+  const DeleteIssueButton = dynamic(() => import('../[id]/DeleteIssueButton'), {
     ssr: false
   })
 

@@ -18,7 +18,7 @@ const AssignSelect = ({ issue }: { issue: Issue }) => {
 
     if (error) return <div>Error: {error.message}</div>
 
-    const handleValueChange = async(userId : any) => {
+    const handleValueChange = async(userId : string) => {
        try {
         await axios.patch(`/api/issues/${issue.id}`, { assignToUserId: userId === 'unassign' ? null : userId })
         toast.success('Assign updated')
