@@ -30,7 +30,7 @@ const IssueStatus = () => {
             <Select.Trigger placeholder='All'>Open</Select.Trigger>
             <Select.Content>
                 {issueStatus.map((status) => (
-                    <Select.Item key={status.label} value={status.value}>{status.label}</Select.Item>
+                    <Select.Item key={status.label} value={status.value!}>{status.label}</Select.Item>
                 ))}
             </Select.Content>
         </Select.Root>
