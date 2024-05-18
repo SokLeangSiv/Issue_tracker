@@ -5,22 +5,41 @@ import prisma from '@/prisma/client'
 import delay from 'delay'
 import dynamic from 'next/dynamic'
 import IssueAction from './IssueAction'
-import { useSession } from 'next-auth/react'
+
 import authOption from '../../auth/authOption'
 import { getServerSession } from 'next-auth'
+import { Status } from '@prisma/client'
+
+interface Props {
+  searchParams: { status: Status }
+
+}
 
 
-const IssuePage = async () => {
+const IssuePage = async ({ searchParams }: Props) => {
+
+
 
   //get  session in use client
 
   const session = await getServerSession(authOption)
+  //validate if the user provide wrong status
 
-  const issuse = await prisma.issue.findMany()
+  const issueStatus = Object.values(Status);
+
+  console.log(issueStatus)
+  const status = issueStatus.includes(searchParams.status) ? searchParams.status : undefined
+  
+  const issuse = await prisma.issue.findMany({
+
+    where: {
+      status
+    },
+  })
 
   await delay(2000)
 
- // convert deleteissueButton to dynamic
+  // convert deleteissueButton to dynamic
   const DeleteIssueButton = dynamic(() => import('../[id]/DeleteIssueButton'), {
     ssr: false
   })
@@ -57,7 +76,7 @@ const IssuePage = async () => {
                 <Table.Cell className='hidden md:table-cell'>{issue.created_at.toDateString()}</Table.Cell>
                 {session && <Table.Cell className='hidden md:table-cell'>
                   <Button color='gray' variant='classic' >
-                    <Link  href={`/issues//edit/${issue.id}`}>
+                    <Link href={`/issues//edit/${issue.id}`}>
                       Edit
                     </Link>
                   </Button>
