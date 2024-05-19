@@ -1,23 +1,38 @@
 
 import { Link, ShowBageStatus } from '@/components'
-import { Button, Table, } from '@radix-ui/themes'
 import prisma from '@/prisma/client'
+import { Button, Table, } from '@radix-ui/themes'
 import delay from 'delay'
 import dynamic from 'next/dynamic'
+import NextLink from 'next/link'
 import IssueAction from './IssueAction'
 
-import authOption from '../../auth/authOption'
+import { Issue, Status } from '@prisma/client'
 import { getServerSession } from 'next-auth'
-import { Status } from '@prisma/client'
+import authOption from '../../auth/authOption'
 
 interface Props {
-  searchParams: { status: Status }
+  searchParams: { status: Status , orderBy : keyof Issue}
 
 }
 
 
 const IssuePage = async ({ searchParams }: Props) => {
 
+
+  const columnSort: { label: string, value: keyof Issue , className ?: string }[] = [
+    {
+      label: "Title", value: "title"
+    },
+
+    {
+      label: "Status", value: "status", className: "hidden md:table-cell"
+    },
+
+    {
+      label: "Created", value: "created_at", className: "hidden md:table-cell"
+    }
+  ]
 
 
   //get  session in use client
@@ -29,7 +44,7 @@ const IssuePage = async ({ searchParams }: Props) => {
 
   console.log(issueStatus)
   const status = issueStatus.includes(searchParams.status) ? searchParams.status : undefined
-  
+
   const issuse = await prisma.issue.findMany({
 
     where: {
@@ -51,9 +66,23 @@ const IssuePage = async ({ searchParams }: Props) => {
       <Table.Root variant='surface'>
         <Table.Header>
           <Table.Row>
-            <Table.ColumnHeaderCell>Issue</Table.ColumnHeaderCell>
-            <Table.ColumnHeaderCell className='hidden md:table-cell'>Status</Table.ColumnHeaderCell>
-            <Table.ColumnHeaderCell className='hidden md:table-cell'>Created</Table.ColumnHeaderCell>
+
+            {columnSort.map((column) => {
+              return (
+                <Table.ColumnHeaderCell key={column.value}>
+                  <NextLink href={
+                    {
+                      query : {...searchParams, orderBy: column.value}
+                    }
+                  }>
+
+                  {column.label}
+                  </NextLink>
+                  {column.value === searchParams.orderBy && '🔼'}
+                  </Table.ColumnHeaderCell>
+              )
+            })}
+
           </Table.Row>
         </Table.Header>
 
