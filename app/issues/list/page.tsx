@@ -45,7 +45,7 @@ const IssuePage = async ({ searchParams }: Props) => {
   console.log(issueStatus)
   const status = issueStatus.includes(searchParams.status) ? searchParams.status : undefined
 
-  const orderBy = columnSort.map(column.value).includes(searchParams.orderBy)  ? {[searchParams.orderBy]: 'asc'} : undefined;
+  const orderBy = columnSort.map(column => column.value).includes(searchParams.orderBy)  ? {[searchParams.orderBy]: 'asc'} : undefined;
 
   const issuse = await prisma.issue.findMany({
 
