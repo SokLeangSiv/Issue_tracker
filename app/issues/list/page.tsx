@@ -10,9 +10,10 @@ import IssueAction from './IssueAction'
 import { Issue, Status } from '@prisma/client'
 import { getServerSession } from 'next-auth'
 import authOption from '../../auth/authOption'
+import Pagination from '@/components/Pagination'
 
 interface Props {
-  searchParams: { status: Status , orderBy : keyof Issue}
+  searchParams: { status: Status, orderBy: keyof Issue, page: string }
 
 }
 
@@ -20,7 +21,7 @@ interface Props {
 const IssuePage = async ({ searchParams }: Props) => {
 
 
-  const columnSort: { label: string, value: keyof Issue , className ?: string }[] = [
+  const columnSort: { label: string, value: keyof Issue, className?: string }[] = [
     {
       label: "Title", value: "title"
     },
@@ -45,7 +46,11 @@ const IssuePage = async ({ searchParams }: Props) => {
   console.log(issueStatus)
   const status = issueStatus.includes(searchParams.status) ? searchParams.status : undefined
 
-  const orderBy = columnSort.map(column => column.value).includes(searchParams.orderBy)  ? {[searchParams.orderBy]: 'asc'} : undefined;
+  const orderBy = columnSort.map(column => column.value).includes(searchParams.orderBy) ? { [searchParams.orderBy]: 'asc' } : undefined;
+
+  const page = parseInt(searchParams.page) || 1;
+  const pageSize = 10;
+
 
   const issuse = await prisma.issue.findMany({
 
@@ -53,8 +58,17 @@ const IssuePage = async ({ searchParams }: Props) => {
       status
     },
 
-    orderBy 
+    orderBy,
+    skip: (page - 1) * pageSize,
+    take: pageSize
   })
+
+  const IssueCount = await prisma.issue.count(
+    {
+      where: {
+        status
+      }
+    })
 
   await delay(2000)
 
@@ -76,14 +90,14 @@ const IssuePage = async ({ searchParams }: Props) => {
                 <Table.ColumnHeaderCell key={column.value}>
                   <NextLink href={
                     {
-                      query : {...searchParams, orderBy: column.value}
+                      query: { ...searchParams, orderBy: column.value }
                     }
                   }>
 
-                  {column.label}
+                    {column.label}
                   </NextLink>
                   {column.value === searchParams.orderBy && '🔼'}
-                  </Table.ColumnHeaderCell>
+                </Table.ColumnHeaderCell>
               )
             })}
 
@@ -124,6 +138,8 @@ const IssuePage = async ({ searchParams }: Props) => {
 
         </Table.Body>
       </Table.Root>
+
+      <Pagination pageSize={pageSize} currentPage={page} itemCount={IssueCount} />
     </div>
   )
 }
