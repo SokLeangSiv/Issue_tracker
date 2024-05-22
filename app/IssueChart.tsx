@@ -2,7 +2,7 @@
 
 import { Card } from '@radix-ui/themes'
 import React from 'react'
-import {ResponsiveContainer, BarChart, Line, XAxis, YAxis, Bar} from 'recharts'
+import {ResponsiveContainer, BarChart, XAxis, YAxis, Bar} from 'recharts'
 
 interface Props {
     open: number,
