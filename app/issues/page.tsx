@@ -9,7 +9,7 @@ import IssueAction from './IssueAction'
 
 import { Issue, Status } from '@prisma/client'
 import { getServerSession } from 'next-auth'
-import authOption from '../../auth/authOption'
+import authOption from '../auth/authOption'
 import Pagination from '@/components/Pagination'
 
 interface Props {
@@ -73,7 +73,7 @@ const IssuePage = async ({ searchParams }: Props) => {
   await delay(2000)
 
   // convert deleteissueButton to dynamic
-  const DeleteIssueButton = dynamic(() => import('../[id]/DeleteIssueButton'), {
+  const DeleteIssueButton = dynamic(() => import('./[id]/DeleteIssueButton'), {
     ssr: false
   })
 
