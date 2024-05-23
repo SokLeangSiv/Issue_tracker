@@ -144,6 +144,6 @@ const IssuePage = async ({ searchParams }: Props) => {
   )
 }
 
-export const revalidate = false
+export const nextDynamic = "force-dynamic";
 
 export default IssuePage

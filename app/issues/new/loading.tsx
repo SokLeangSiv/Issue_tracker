@@ -1,5 +1,5 @@
 
-import IssueSkeleton from '../_components/IssueSkeleton'
+import IssueSkeleton from '../components/IssueSkeleton'
 
 
 export default IssueSkeleton
