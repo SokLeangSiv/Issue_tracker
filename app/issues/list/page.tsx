@@ -144,6 +144,6 @@ const IssuePage = async ({ searchParams }: Props) => {
   )
 }
 
-export const revalidation = '0'
+export const revalidate = '0'
 
 export default IssuePage
